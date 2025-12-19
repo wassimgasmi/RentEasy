@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
   headerBackWrap: { paddingHorizontal: 20, paddingTop: 14 },
   backPill: { width: 56, height: 30, backgroundColor: '#0A6BFF', borderRadius: 16, justifyContent: 'center', alignItems: 'center' },
   backPillAbsolute: { position: 'absolute', left: 16, top: 12, width: 56, height: 30, backgroundColor: '#0A6BFF', borderRadius: 16, justifyContent: 'center', alignItems: 'center', zIndex: 10 },
-  backArrow: { color: '#fff', fontSize: 16 },
+  backArrow: { color: '#fff', fontSize: 26 },
   content: { flex: 1, paddingHorizontal: 28, paddingTop: 18 },
   centerBlock: { flex: 1, justifyContent: 'center', alignItems: 'center', width: '100%' },
   title: { fontSize: 22, fontWeight: '700', color: '#111', textAlign: 'center', marginTop: 6 },

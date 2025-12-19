@@ -17,9 +17,11 @@ const TransactionCard: React.FC<{ title: string; amount: string; subtitle?: stri
 
 type Props = {
   onAddTenancy?: () => void;
+  onOpenWallet?: () => void;
+  onOpenInvitation?: () => void;
 };
 
-const DashboardScreen: React.FC<Props> = ({ onAddTenancy }) => {
+const DashboardScreen: React.FC<Props> = ({ onAddTenancy, onOpenWallet, onOpenInvitation }) => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.container}>
@@ -69,8 +71,12 @@ const DashboardScreen: React.FC<Props> = ({ onAddTenancy }) => {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.navItem} activeOpacity={0.85}>
+          <TouchableOpacity style={styles.navItem} activeOpacity={0.85} onPress={() => onOpenWallet && onOpenWallet()}>
             <Ionicons name="card" size={22} color="#0A6BFF" />
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.navItem} activeOpacity={0.85} onPress={() => onOpenInvitation && onOpenInvitation()}>
+            <Ionicons name="mail" size={22} color="#0A6BFF" />
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.navItem} activeOpacity={0.85}>

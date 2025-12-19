@@ -26,6 +26,9 @@ import Verif2Screen from './src/screens/Verif2Screen';
 import DashboardScreen from './src/screens/DashboardScreen';
 import AddTenancyScreen from './src/screens/AddTenancyScreen';
 import TenancyDetailsScreen from './src/screens/TenancyDetailsScreen';
+import TransactionHistoryScreen from './src/screens/TransactionHistoryScreen';
+import TransactionReceiptScreen from './src/screens/TransactionReceiptScreen';
+import InvitationScreen from './src/screens/InvitationScreen';
 import {
   SafeAreaProvider,
   useSafeAreaInsets,
@@ -62,6 +65,11 @@ function AppContent() {
   const [showAddTenancy, setShowAddTenancy] = useState(false);
   const [showTenancyDetails, setShowTenancyDetails] = useState(false);
   const [tenancyType, setTenancyType] = useState('');
+  const [showTransactions, setShowTransactions] = useState(false);
+  const [showTransactionReceipt, setShowTransactionReceipt] = useState(false);
+  const [selectedTransaction, setSelectedTransaction] = useState<any>(null);
+  const [showInvitation, setShowInvitation] = useState(false);
+  const [transactionActiveTab, setTransactionActiveTab] = useState<string>('all');
 
   useEffect(() => {
     // ignore timer warnings if any
@@ -199,12 +207,38 @@ function AppContent() {
                     }}
                   />
                 ) : (
-                  <DashboardScreen onAddTenancy={() => setShowAddTenancy(true)} />
+                  showTransactionReceipt ? (
+                    <TransactionReceiptScreen
+                      transaction={selectedTransaction}
+                      onBack={() => {
+                        // Close receipt and return to transaction list (preserve tab)
+                        setShowTransactionReceipt(false);
+                        setSelectedTransaction(null);
+                        setShowTransactions(true);
+                      }}
+                    />
+                  ) : showTransactions ? (
+                    <TransactionHistoryScreen
+                      onBack={() => {
+                        // Ensure we return to dashboard when backing out of transactions
+                        setShowTransactions(false);
+                        setShowDashboard(true);
+                      }}
+                      activeTab={transactionActiveTab}
+                      onChangeTab={(t: string) => setTransactionActiveTab(t)}
+                      onOpenReceipt={(tx: any) => { setSelectedTransaction(tx); setShowTransactionReceipt(true); }}
+                    />
+                  ) : showInvitation ? (
+                    <InvitationScreen onBack={() => { setShowInvitation(false); setShowDashboard(true); }} />
+                  ) : (
+                    <DashboardScreen onAddTenancy={() => setShowAddTenancy(true)} onOpenWallet={() => setShowTransactions(true)} onOpenInvitation={() => setShowInvitation(true)} />
+                  )
                 )
               ) : (
                 <AuthEntryScreen
                   onLogin={() => {
-                    console.log('Login pressed - implement navigation');
+                    // Open EnterOmanIdScreen when user presses Login
+                    setShowEnterOmanId(true);
                   }}
                   onRegister={() => {
                     // Open the register screen (new flow)
